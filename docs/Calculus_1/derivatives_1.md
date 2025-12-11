@@ -1,7 +1,6 @@
 # CLASS NOTES: INTRO TO DERIVATIVES
 
 **Topic:** The Power Rule & Basic Differentiation
-**Subject:** Calculus I
 
 ## I. Definition of a Derivative
 

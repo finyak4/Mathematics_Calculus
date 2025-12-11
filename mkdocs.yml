@@ -23,6 +23,10 @@ nav:
   - Calculus 1:
       - "Derivatives | Power rule": Calculus_1/derivatives_1.md
       - "Product, Quotient, Chain rules | Trigonometric Derivatives": Calculus_1/derivatives_2.md
+      - Interesting Topics:
+          - "Newton Fractal": Calculus_1/newton_fractal.md
+          - "Newton Fractal Visualisation": Calculus_1/newton_fractal.html
+          - "Curve Sketching": Calculus_1/func_graph.md
 
 
 markdown_extensions:

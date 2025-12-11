@@ -1,7 +1,6 @@
 # CLASS NOTES: DERIVATIVE RULES & TRIGONOMETRY
 
 **Topic:** Product, Quotient, Chain Rules & Trig
-**Subject:** Calculus I
 
 ## I. Product Rule
 
@@ -38,18 +37,15 @@ Used when two functions are **divided**: $\frac{f(x)}{g(x)}$.
 
 $$\left(\frac{f}{g}\right)' = \frac{f'g - fg'}{g^2}$$
 
-**Memorize (Rhyme):**
-> "Lo d-Hi minus Hi d-Lo, draw the line and square the Lo."
-> *   **Lo:** Bottom function ($g$)
-> *   **Hi:** Top function ($f$)
-> *   **d-:** Derivative of...
+**Description:**
+The derivative of the top function ($f$) times the bottom function ($g$), minus the top function ($f$) times the derivative of the bottom function ($g$), all over the bottom function squared ($g^2$).
 
 ### Example
 
 $$y = \frac{5x^2}{3x + 1}$$
 
-*   $Hi = 5x^2 \rightarrow dHi = 10x$
-*   $Lo = 3x+1 \rightarrow dLo = 3$
+*   $f = 5x^2 \rightarrow f' = 10x$
+*   $g = 3x+1 \rightarrow g' = 3$
 
 $$y' = \frac{(3x+1)(10x) - (5x^2)(3)}{(3x+1)^2}$$
 
@@ -128,7 +124,7 @@ $$y' = \mathbf{4\cos(4x)}$$
 ## V. Key Takeaways / Cheat Sheet
 
 *   **Product:** $f'g + fg'$
-*   **Quotient:** $\frac{Lo \cdot dHi - Hi \cdot dLo}{Lo^2}$
+*   **Quotient:** $\frac{f'g - fg'}{g^2}$
 *   **Chain:** Out' $\cdot$ In'
 *   **Trig Signs:** "Co" implies Negative.
 
