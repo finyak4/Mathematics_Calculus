@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newton Fractal Explorer: z^3 - 1</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            color: #eee;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        header {
+            padding: 10px 20px;
+            background: #252525;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        p {
+            margin: 5px 0 0;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        #canvas-container {
+            position: relative;
+            flex-grow: 1;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        canvas {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            cursor: crosshair;
+        }
+
+        #fractalCanvas {
+            z-index: 1;
+        }
+
+        #overlayCanvas {
+            z-index: 2;
+        }
+
+        #info-panel {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+            pointer-events: none;
+            z-index: 3;
+            border: 1px solid #444;
+            min-width: 200px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .label {
+            color: #888;
+        }
+
+        .value {
+            font-family: monospace;
+            color: #fff;
+        }
+
+        .root-indicator {
+            width: 12px;
+            height: 12px;
+            display: inline-block;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        /* Modal Styles */
+        #info-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        #info-content {
+            background: #252525;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            border: 1px solid #444;
+            position: relative;
+        }
+
+        #info-content h2 {
+            margin-top: 0;
+            color: #fff;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+        }
+
+        #info-content h3 {
+            color: #ddd;
+            margin-top: 20px;
+        }
+
+        #info-content p,
+        #info-content ul {
+            line-height: 1.6;
+            color: #ccc;
+        }
+
+        #info-content li {
+            margin-bottom: 5px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #aaa;
+            transition: 0.2s;
+        }
+
+        .close-btn:hover {
+            color: #fff;
+        }
+
+        .math-block {
+            background: #1a1a1a;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        #learn-more-btn {
+            background: #4a4a4a;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 15px;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+
+        #learn-more-btn:hover {
+            background: #666;
+        }
+    </style>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <div style="display: flex; align-items: center; justify-content: center;">
+            <h1>Newton Fractal: f(z) = z³ - 1</h1>
+            <button id="learn-more-btn" onclick="document.getElementById('info-modal').style.display='flex'">Learn
+                More</button>
+        </div>
+        <p>Move mouse to see iteration path. Scroll to zoom.</p>
+    </header>
+
+    <div id="canvas-container">
+        <canvas id="fractalCanvas"></canvas>
+        <canvas id="overlayCanvas"></canvas>
+
+        <div id="info-panel">
+            <div class="info-row"><span class="label">Re (x):</span> <span class="value" id="val-re">0.00</span></div>
+            <div class="info-row"><span class="label">Im (y):</span> <span class="value" id="val-im">0.00</span></div>
+            <div class="info-row"><span class="label">Iterations:</span> <span class="value" id="val-iter">0</span>
+            </div>
+            <div class="info-row" style="margin-top:10px; align-items: center;">
+                <span class="label">Converges to:</span>
+            </div>
+            <div id="convergence-target" style="font-weight: bold; font-size: 0.9rem; margin-top: 5px;"></div>
+        </div>
+    </div>
+
+    <div id="info-modal" onclick="if(event.target === this) this.style.display='none'">
+        <div id="info-content">
+            <span class="close-btn" onclick="document.getElementById('info-modal').style.display='none'">&times;</span>
+
+            <h2>What is Newton's Method?</h2>
+            <p>Newton's method is an iterative technique used to approximate the roots (zeroes) of a real-valued
+                function. It uses the tangent line of the function at the current point to estimate the next point.</p>
+
+            <div class="math-block">
+                $$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$$
+            </div>
+
+            <p><strong>Where:</strong></p>
+            <ul>
+                <li>$x_n$: The current guess for the root.</li>
+                <li>$x_{n+1}$: The next, better approximation.</li>
+                <li>$f(x_n)$ & $f'(x_n)$: Function value and derivative/slope.</li>
+            </ul>
+
+            <h2>Newton Fractals</h2>
+            <p>When applied to complex functions $z \in \mathbb{C}$ (like $z^3 - 1$), the starting point determines
+                which root the method converges to.</p>
+
+            <h3>The Boundary of Chaos</h3>
+            <p>The boundary between these regions (basins of attraction) is fractal. Small changes in position can lead
+                to completely different roots—a hallmark of chaos.</p>
+            <p><em>Interact with the background to see this! ZOOM with scroll, HOVER to see orbits.</em></p>
+        </div>
+    </div>
+
+    <script>
+        const fractalCanvas = document.getElementById('fractalCanvas');
+        const overlayCanvas = document.getElementById('overlayCanvas');
+        const ctxFractal = fractalCanvas.getContext('2d');
+        const ctxOverlay = overlayCanvas.getContext('2d');
+        const container = document.getElementById('canvas-container');
+
+        // State
+        let width, height;
+        let centerX = 0;
+        let centerY = 0;
+        let scale = 150; // Pixels per unit
+        const maxIterations = 40;
+        const tolerance = 0.001;
+
+        // Roots of z^3 - 1
+        // 1. z = 1
+        // 2. z = -0.5 + i*sqrt(3)/2  (~ -0.5 + 0.866i)
+        // 3. z = -0.5 - i*sqrt(3)/2  (~ -0.5 - 0.866i)
+        const roots = [
+            { re: 1, im: 0, color: [255, 80, 80] },    // Red
+            { re: -0.5, im: 0.8660254, color: [80, 255, 80] }, // Green
+            { re: -0.5, im: -0.8660254, color: [80, 120, 255] } // Blue
+        ];
+
+        // Resize handler
+        function resize() {
+            const size = Math.min(container.clientWidth, container.clientHeight) - 40;
+            width = size;
+            height = size;
+
+            // High DPI scaling
+            const dpr = window.devicePixelRatio || 1;
+            fractalCanvas.width = width * dpr;
+            fractalCanvas.height = height * dpr;
+            overlayCanvas.width = width * dpr;
+            overlayCanvas.height = height * dpr;
+
+            fractalCanvas.style.width = `${width}px`;
+            fractalCanvas.style.height = `${height}px`;
+            overlayCanvas.style.width = `${width}px`;
+            overlayCanvas.style.height = `${height}px`;
+
+            ctxFractal.scale(dpr, dpr);
+            ctxOverlay.scale(dpr, dpr);
+
+            drawFractal();
+        }
+
+        // Complex Number Math Helper
+        function complexMul(a, b) {
+            return { re: a.re * b.re - a.im * b.im, im: a.re * b.im + a.im * b.re };
+        }
+
+        function complexDiv(a, b) {
+            const denom = b.re * b.re + b.im * b.im;
+            if (denom === 0) return { re: 0, im: 0 };
+            return {
+                re: (a.re * b.re + a.im * b.im) / denom,
+                im: (a.im * b.re - a.re * b.im) / denom
+            };
+        }
+
+        function complexAdd(a, b) {
+            return { re: a.re + b.re, im: a.im + b.im };
+        }
+
+        function complexSub(a, b) {
+            return { re: a.re - b.re, im: a.im - b.im };
+        }
+
+        function complexMagSq(z) {
+            return z.re * z.re + z.im * z.im;
+        }
+
+        // Newton Iteration: z_new = z - (z^3 - 1) / (3z^2)
+        // Simplified: z_new = (2z^3 + 1) / (3z^2)
+        function newtonStep(z) {
+            // Calculate z^2
+            const z2 = { re: z.re * z.re - z.im * z.im, im: 2 * z.re * z.im };
+            // Calculate z^3
+            const z3 = complexMul(z2, z);
+
+            // Numerator: 2z^3 + 1
+            const num = { re: 2 * z3.re + 1, im: 2 * z3.im };
+            // Denominator: 3z^2
+            const den = { re: 3 * z2.re, im: 3 * z2.im };
+
+            return complexDiv(num, den);
+        }
+
+        // Check which root a point converges to
+        function getRootIndex(z) {
+            for (let i = 0; i < roots.length; i++) {
+                const distSq = (z.re - roots[i].re) ** 2 + (z.im - roots[i].im) ** 2;
+                if (distSq < tolerance) return i;
+            }
+            return -1;
+        }
+
+        // Main Rendering Function (Static Background)
+        function drawFractal() {
+            // We use a temporary smaller canvas buffer for speed if needed, 
+            // but modern JS handles 600x600 iteration loops reasonably well.
+            // For ImageManipulation, we need raw pixels.
+
+            const w = fractalCanvas.width;
+            const h = fractalCanvas.height;
+            const imageData = ctxFractal.createImageData(w, h);
+            const data = imageData.data;
+
+            // Effective scale for the buffer loop
+            // We iterate over physical pixels
+            const dpr = window.devicePixelRatio || 1;
+
+            for (let py = 0; py < h; py++) {
+                // Map pixel y to complex im
+                // The canvas logic is centered. 
+                // y goes 0 -> h. 0 is top (+Im), h is bottom (-Im).
+                const im = centerY - (py / dpr - height / 2) / scale;
+
+                for (let px = 0; px < w; px++) {
+                    // Map pixel x to complex re
+                    const re = centerX + (px / dpr - width / 2) / scale;
+
+                    let z = { re, im };
+                    let iter = 0;
+                    let rootIdx = -1;
+
+                    // Loop
+                    while (iter < maxIterations) {
+                        // Check close to 0 to avoid division by zero
+                        if (Math.abs(z.re) < 0.001 && Math.abs(z.im) < 0.001) break;
+
+                        z = newtonStep(z);
+                        rootIdx = getRootIndex(z);
+
+                        if (rootIdx !== -1) break;
+                        iter++;
+                    }
+
+                    // Coloring
+                    const pIndex = (py * w + px) * 4;
+
+                    if (rootIdx !== -1) {
+                        const color = roots[rootIdx].color;
+                        // Shading based on iterations (more iterations = darker)
+                        const brightness = Math.max(0.4, 1 - (iter * 0.04));
+
+                        data[pIndex] = color[0] * brightness;     // R
+                        data[pIndex + 1] = color[1] * brightness; // G
+                        data[pIndex + 2] = color[2] * brightness; // B
+                        data[pIndex + 3] = 255; // Alpha
+                    } else {
+                        // Didn't converge (black)
+                        data[pIndex] = 0;
+                        data[pIndex + 1] = 0;
+                        data[pIndex + 2] = 0;
+                        data[pIndex + 3] = 255;
+                    }
+                }
+            }
+
+            ctxFractal.putImageData(imageData, 0, 0);
+        }
+
+        // Convert screen coordinates to complex
+        function screenToComplex(sx, sy) {
+            return {
+                re: centerX + (sx - width / 2) / scale,
+                im: centerY - (sy - height / 2) / scale // Y is inverted in complex plane usually
+            };
+        }
+
+        // Convert complex to screen coordinates
+        function complexToScreen(z) {
+            return {
+                x: (z.re - centerX) * scale + width / 2,
+                y: height / 2 - (z.im - centerY) * scale
+            };
+        }
+
+        // Draw the orbit of a specific point
+        function drawOrbit(mouseZ) {
+            ctxOverlay.clearRect(0, 0, overlayCanvas.width / (window.devicePixelRatio || 1), overlayCanvas.height / (window.devicePixelRatio || 1));
+
+            let z = { ...mouseZ };
+            let points = [z];
+            let rootIdx = -1;
+
+            // Calculate path
+            for (let i = 0; i < maxIterations; i++) {
+                if (Math.abs(z.re) < 0.001 && Math.abs(z.im) < 0.001) break;
+                z = newtonStep(z);
+                points.push(z);
+                rootIdx = getRootIndex(z);
+                if (rootIdx !== -1) break;
+            }
+
+            // Draw Lines
+            ctxOverlay.beginPath();
+            ctxOverlay.strokeStyle = 'white';
+            ctxOverlay.lineWidth = 2;
+            ctxOverlay.lineJoin = 'round';
+            ctxOverlay.lineCap = 'round';
+
+            // Draw path
+            const start = complexToScreen(points[0]);
+            ctxOverlay.moveTo(start.x, start.y);
+
+            for (let i = 1; i < points.length; i++) {
+                const p = complexToScreen(points[i]);
+                ctxOverlay.lineTo(p.x, p.y);
+            }
+            ctxOverlay.stroke();
+
+            // Draw Dots
+            for (let i = 0; i < points.length; i++) {
+                const p = complexToScreen(points[i]);
+                ctxOverlay.beginPath();
+                ctxOverlay.arc(p.x, p.y, 3, 0, Math.PI * 2);
+                ctxOverlay.fillStyle = (i === 0) ? '#fff' : 'rgba(255,255,255,0.5)';
+                if (i === points.length - 1 && rootIdx !== -1) {
+                    // Color the final dot based on the root
+                    const c = roots[rootIdx].color;
+                    ctxOverlay.fillStyle = `rgb(${c[0]}, ${c[1]}, ${c[2]})`;
+                    ctxOverlay.arc(p.x, p.y, 6, 0, Math.PI * 2); // Bigger final dot
+                }
+                ctxOverlay.fill();
+            }
+
+            // Update UI
+            document.getElementById('val-re').innerText = mouseZ.re.toFixed(4);
+            document.getElementById('val-im').innerText = mouseZ.im.toFixed(4);
+            document.getElementById('val-iter').innerText = points.length - 1;
+
+            const targetEl = document.getElementById('convergence-target');
+            if (rootIdx !== -1) {
+                let rootName = "";
+                if (rootIdx === 0) rootName = "1";
+                if (rootIdx === 1) rootName = "-0.5 + 0.866i";
+                if (rootIdx === 2) rootName = "-0.5 - 0.866i";
+
+                const c = roots[rootIdx].color;
+                targetEl.innerHTML = `<span class="root-indicator" style="background: rgb(${c[0]},${c[1]},${c[2]})"></span> Root: ${rootName}`;
+            } else {
+                targetEl.innerHTML = "Not converged yet";
+            }
+        }
+
+        // Interaction Handlers
+        overlayCanvas.addEventListener('mousemove', (e) => {
+            const rect = overlayCanvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const z = screenToComplex(x, y);
+            drawOrbit(z);
+        });
+
+        // Zoom Support
+        overlayCanvas.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const zoomIntensity = 0.1;
+            const wheel = e.deltaY < 0 ? 1 : -1;
+            const zoom = Math.exp(wheel * zoomIntensity);
+
+            // Current mouse position in complex plane
+            const rect = overlayCanvas.getBoundingClientRect();
+            const mx = e.clientX - rect.left;
+            const my = e.clientY - rect.top;
+            const mouseZ = screenToComplex(mx, my);
+
+            // Update Scale
+            scale *= zoom;
+
+            // Shift center to keep mouse under same point
+            // newCenter = mouseZ - (mousePixelsFromCenter / newScale)
+            // This math is slightly simplified, usually we just update scale and let user pan, 
+            // but centering zoom is nicer.
+            centerX = mouseZ.re - (mx - width / 2) / scale;
+            centerY = mouseZ.im + (my - height / 2) / scale;
+
+            drawFractal();
+            drawOrbit(mouseZ); // Update orbit lines immediately
+        });
+
+        // Handle Window Resize
+        window.addEventListener('resize', resize);
+
+        // Initial load
+        window.onload = () => {
+            resize(); // This calls drawFractal
+        };
+
+    </script>
+
+</body>
+
+</html>
