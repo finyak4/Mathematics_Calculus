@@ -1,0 +1,34 @@
+site_name: Math_Calc Documentation
+
+theme:
+  name: material
+  palette: 
+    # Light mode
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+nav:
+  - Home: index.md
+  - Calculus 1:
+      - "Derivatives | Power rule": Calculus_1/derivatives_1.md
+      - "Product, Quotient, Chain rules | Trigonometric Derivatives": Calculus_1/derivatives_2.md
+
+
+markdown_extensions:
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js      

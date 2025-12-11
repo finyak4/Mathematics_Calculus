@@ -3,7 +3,7 @@
 **Topic:** The Power Rule & Basic Differentiation
 **Subject:** Calculus I
 
-## I. DEFINITION OF A DERIVATIVE
+## I. Definition of a Derivative
 
 ### Formal Definition (Limit Definition)
 
@@ -22,7 +22,7 @@ $$f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}$$
 * Lagrange: $f'(x)$ or $y'$
 * Leibniz: $\frac{dy}{dx}$ or $\frac{d}{dx}[f(x)]$
 
-## II. THE POWER RULE (Shortcut for $x^n$)
+## II. The Power Rule (Shortcut for $x^n$)
 
 Instead of using the limit definition $\lim_{h \to 0}$, we use the Power Rule for polynomials.
 
@@ -35,7 +35,7 @@ $$\frac{d}{dx}(x^n) = n \cdot x^{n-1}$$
 1.  Bring the exponent ($n$) down to the front (multiply).
 2.  Subtract $1$ from the exponent.
 
-## III. EXAMPLES
+## III. Examples
 
 ### A. Basic Polynomials
 
@@ -93,7 +93,7 @@ Simplify:
 
 $$y' = \mathbf{\frac{1}{2\sqrt{x}}}$$
 
-## IV. SUM AND DIFFERENCE RULE
+## IV. Sum And Difference Rule
 
 If you have multiple terms, take the derivative of each one separately.
 
@@ -107,7 +107,7 @@ $$f'(x) = \underbrace{10x^4}_{2\cdot5} - \underbrace{12x^2}_{4\cdot3} + \underbr
 
 $$f'(x) = 10x^4 - 12x^2 + 7$$
 
-## V. KEY TAKEAWAYS / CHEAT SHEET
+## V. Key Takwaways / Cheat Sheet
 
 * $\frac{d}{dx}(c) = 0$ (Constants disappear)
 * $\frac{d}{dx}(cx) = c$ (Linear terms leave just the coefficient)
@@ -115,7 +115,7 @@ $$f'(x) = 10x^4 - 12x^2 + 7$$
 * Rewrite roots as fractions ($\sqrt{x} \to x^{1/2}$)
 * Rewrite denominators as negative powers ($\frac{1}{x} \to x^{-1}$)
 
-## VI. MIXED PRACTICE EXAMPLES
+## VI. Mixed Practice Examples
 
 Here are some slightly harder problems combining the rules above.
 
