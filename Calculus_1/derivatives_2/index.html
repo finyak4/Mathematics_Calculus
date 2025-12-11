@@ -959,18 +959,13 @@
 <p>Used when two functions are <strong>divided</strong>: <span class="arithmatex">\(\frac{f(x)}{g(x)}\)</span>.</p>
 <h3 id="the-formula_1">The Formula</h3>
 <div class="arithmatex">\[\left(\frac{f}{g}\right)' = \frac{f'g - fg'}{g^2}\]</div>
-<p><strong>Memorize (Rhyme):</strong></p>
-<blockquote>
-<p>"Lo d-Hi minus Hi d-Lo, draw the line and square the Lo."
-*   <strong>Lo:</strong> Bottom function (<span class="arithmatex">\(g\)</span>)
-*   <strong>Hi:</strong> Top function (<span class="arithmatex">\(f\)</span>)
-*   <strong>d-:</strong> Derivative of...</p>
-</blockquote>
+<p><strong>Description:</strong>
+The derivative of the top function (<span class="arithmatex">\(f\)</span>) times the bottom function (<span class="arithmatex">\(g\)</span>), minus the top function (<span class="arithmatex">\(f\)</span>) times the derivative of the bottom function (<span class="arithmatex">\(g\)</span>), all over the bottom function squared (<span class="arithmatex">\(g^2\)</span>).</p>
 <h3 id="example_1">Example</h3>
 <div class="arithmatex">\[y = \frac{5x^2}{3x + 1}\]</div>
 <ul>
-<li><span class="arithmatex">\(Hi = 5x^2 \rightarrow dHi = 10x\)</span></li>
-<li><span class="arithmatex">\(Lo = 3x+1 \rightarrow dLo = 3\)</span></li>
+<li><span class="arithmatex">\(f = 5x^2 \rightarrow f' = 10x\)</span></li>
+<li><span class="arithmatex">\(g = 3x+1 \rightarrow g' = 3\)</span></li>
 </ul>
 <div class="arithmatex">\[y' = \frac{(3x+1)(10x) - (5x^2)(3)}{(3x+1)^2}\]</div>
 <p>Simplify Numerator:</p>
@@ -1026,7 +1021,7 @@
 <h2 id="v-key-takeaways-cheat-sheet">V. Key Takeaways / Cheat Sheet</h2>
 <ul>
 <li><strong>Product:</strong> <span class="arithmatex">\(f'g + fg'\)</span></li>
-<li><strong>Quotient:</strong> <span class="arithmatex">\(\frac{Lo \cdot dHi - Hi \cdot dLo}{Lo^2}\)</span></li>
+<li><strong>Quotient:</strong> <span class="arithmatex">\(\frac{f'g - fg'}{g^2}\)</span></li>
 <li><strong>Chain:</strong> Out' <span class="arithmatex">\(\cdot\)</span> In'</li>
 <li><strong>Trig Signs:</strong> "Co" implies Negative.</li>
 </ul>
