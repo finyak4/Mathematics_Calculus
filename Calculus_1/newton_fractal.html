@@ -103,107 +103,13 @@
             border-radius: 50%;
             margin-right: 8px;
         }
-
-        /* Modal Styles */
-        #info-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 100;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(5px);
-        }
-
-        #info-content {
-            background: #252525;
-            padding: 30px;
-            border-radius: 12px;
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            border: 1px solid #444;
-            position: relative;
-        }
-
-        #info-content h2 {
-            margin-top: 0;
-            color: #fff;
-            border-bottom: 1px solid #444;
-            padding-bottom: 10px;
-        }
-
-        #info-content h3 {
-            color: #ddd;
-            margin-top: 20px;
-        }
-
-        #info-content p,
-        #info-content ul {
-            line-height: 1.6;
-            color: #ccc;
-        }
-
-        #info-content li {
-            margin-bottom: 5px;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 24px;
-            cursor: pointer;
-            color: #aaa;
-            transition: 0.2s;
-        }
-
-        .close-btn:hover {
-            color: #fff;
-        }
-
-        .math-block {
-            background: #1a1a1a;
-            padding: 10px;
-            border-radius: 5px;
-            text-align: center;
-            margin: 10px 0;
-        }
-
-        #learn-more-btn {
-            background: #4a4a4a;
-            color: white;
-            border: none;
-            padding: 5px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-left: 15px;
-            font-size: 0.9rem;
-            transition: 0.2s;
-        }
-
-        #learn-more-btn:hover {
-            background: #666;
-        }
     </style>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
 <body>
 
     <header>
-        <div style="display: flex; align-items: center; justify-content: center;">
-            <h1>Newton Fractal: f(z) = z³ - 1</h1>
-            <button id="learn-more-btn" onclick="document.getElementById('info-modal').style.display='flex'">Learn
-                More</button>
-        </div>
+        <h1>Newton Fractal: f(z) = z³ - 1</h1>
         <p>Move mouse to see iteration path. Scroll to zoom.</p>
     </header>
 
@@ -220,36 +126,6 @@
                 <span class="label">Converges to:</span>
             </div>
             <div id="convergence-target" style="font-weight: bold; font-size: 0.9rem; margin-top: 5px;"></div>
-        </div>
-    </div>
-
-    <div id="info-modal" onclick="if(event.target === this) this.style.display='none'">
-        <div id="info-content">
-            <span class="close-btn" onclick="document.getElementById('info-modal').style.display='none'">&times;</span>
-
-            <h2>What is Newton's Method?</h2>
-            <p>Newton's method is an iterative technique used to approximate the roots (zeroes) of a real-valued
-                function. It uses the tangent line of the function at the current point to estimate the next point.</p>
-
-            <div class="math-block">
-                $$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$$
-            </div>
-
-            <p><strong>Where:</strong></p>
-            <ul>
-                <li>$x_n$: The current guess for the root.</li>
-                <li>$x_{n+1}$: The next, better approximation.</li>
-                <li>$f(x_n)$ & $f'(x_n)$: Function value and derivative/slope.</li>
-            </ul>
-
-            <h2>Newton Fractals</h2>
-            <p>When applied to complex functions $z \in \mathbb{C}$ (like $z^3 - 1$), the starting point determines
-                which root the method converges to.</p>
-
-            <h3>The Boundary of Chaos</h3>
-            <p>The boundary between these regions (basins of attraction) is fractal. Small changes in position can lead
-                to completely different roots—a hallmark of chaos.</p>
-            <p><em>Interact with the background to see this! ZOOM with scroll, HOVER to see orbits.</em></p>
         </div>
     </div>
 
