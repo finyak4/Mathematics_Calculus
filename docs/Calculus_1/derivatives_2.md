@@ -38,6 +38,7 @@ Used when two functions are **divided**: $\frac{f(x)}{g(x)}$.
 $$\left(\frac{f}{g}\right)' = \frac{f'g - fg'}{g^2}$$
 
 **Description:**
+
 The derivative of the top function ($f$) times the bottom function ($g$), minus the top function ($f$) times the derivative of the bottom function ($g$), all over the bottom function squared ($g^2$).
 
 ### Example
