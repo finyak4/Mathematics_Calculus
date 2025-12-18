@@ -21,12 +21,14 @@ theme:
 nav:
   - Home: index.md
   - Calculus 1:
-      - "Derivatives | Power rule": Calculus_1/derivatives_1.md
-      - "Product, Quotient, Chain rules | Trigonometric Derivatives": Calculus_1/derivatives_2.md
+      - "1. Derivatives | Power rule": Calculus_1/derivatives_1.md
+      - "2. Product, Quotient, Chain rules | Trigonometric Derivatives": Calculus_1/derivatives_2.md
+      - "3 Applications of Derivatives": 
+        - "3.1 Applications of Derivatives": Calculus_1/derivatives_3.md
+        - "3.2 Curve Sketching": Calculus_1/func_graph.md
       - Interesting Topics:
           - "Newton Fractal": Calculus_1/newton_fractal.md
           - "Newton Fractal Visualisation": Calculus_1/newton_fractal.html
-          - "Curve Sketching": Calculus_1/func_graph.md
 
 
 markdown_extensions:

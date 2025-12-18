@@ -78,6 +78,7 @@ Combine all info into a table before drawing.
 | $x > 0$ | $-$ | Decr | $+$ | Up | $\searrow \cup$ |
 
 **Drawing Steps:**
+
 1.  Plot Intercepts, Holes, and Asymptotes (dashed lines).
 2.  Plot Max/Min and Inflection Points.
 3.  Connect the dots following the "Shape" guidance.
