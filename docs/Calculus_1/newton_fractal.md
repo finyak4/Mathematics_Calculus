@@ -32,7 +32,3 @@ The boundary between these regions is often fractal. This means the pattern is i
 #### 1. Detailed View: The Edge of Stability
 ![Fractal Zoom](./img/Screenshot%202025-12-11%20161417.png)
 
-
-#### 2. Standard Newton Fractal: Basins of Attraction
-![Newton Fractal](./img/newton_fractal.png)
-*This image shows the entire set of basins for a polynomial. Each color represents the specific root that the method converges to. The fractal boundary is the set of initial points that fail to converge or lie on the "fence" between roots.*
