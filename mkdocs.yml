@@ -2,39 +2,46 @@ site_name: "Mathematics | Calculus Documentation"
 
 theme:
   name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
   palette: 
+    # Dark mode (default)
+    - scheme: slate
+      primary: cyan
+      accent: purple
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
     # Light mode
     - scheme: default
-      primary: indigo
-      accent: indigo
+      primary: cyan
+      accent: purple
       toggle:
-        icon: material/brightness-7
+        icon: material/weather-sunny
         name: Switch to dark mode
-    # Dark mode
-    - scheme: slate
-      primary: indigo
-      accent: indigo
-      toggle:
-        icon: material/brightness-4
-        name: Switch to light mode
+
 
 nav:
   - Home: index.md
-  - Calculus 1:
-      - "1. Derivatives | Power rule": Calculus_1/derivatives_1.md
-      - "2. Product, Quotient, Chain rules | Trigonometric Derivatives": Calculus_1/derivatives_2.md
-      - "3 Applications of Derivatives": 
-        - "3.1 Applications of Derivatives": Calculus_1/derivatives_3.md
-        - "3.2 Curve Sketching": Calculus_1/func_graph.md
-      - Interesting Topics:
-          - "Newton Fractal": Calculus_1/newton_fractal.md
-          - "Newton Fractal Visualisation": Calculus_1/newton_fractal.html
-
+  - "Linear Algebra": linear_algebra.md
+  - "Analytic Geometry": analytic_geometry.md
+  - "Calculus": calculus.md
 
 markdown_extensions:
   - pymdownx.arithmatex:
       generic: true
 
+
+extra_css:
+  - stylesheets/extra.css
+
 extra_javascript:
+  - javascripts/javascript.js
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js      

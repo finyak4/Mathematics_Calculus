@@ -1,0 +1,38 @@
+/* Center images */
+img {
+  display: block;
+  margin: 0 auto;
+}
+
+/* Make math slightly larger and add breathing room */
+.arithmatex {
+  font-size: 1.15em;
+  line-height: 1.6;
+}
+
+/* Global line height improvement */
+p,
+li {
+  line-height: 1.8;
+  margin-bottom: 1em;
+}
+
+/* Space out block math specifically */
+.arithmatex[display="block"],
+.arithmatex.display,
+mjx-container[display="true"] {
+  display: block;
+  margin: 20px 0 !important;
+  padding: 10px 0 !important;
+}
+
+/* Increase matrix row spacing */
+mjx-mtd {
+  padding-top: 0.5em !important;
+  padding-bottom: 0.5em !important;
+}
+
+/* Adjust table widths */
+table {
+  width: 100%;
+}
